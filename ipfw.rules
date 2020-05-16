@@ -1,0 +1,14 @@
+ipfw -q -f flush
+
+cmd="ipfw -q add"
+vpn="tun0"
+
+$cmd 00001 allow all from any to any via lo0
+
+$cmd 00010 allow all from any to any via $vpn
+
+$cmd 00101 allow all from me to MY_HOME_SUBNET uid qbittorrent
+$cmd 00102 allow all from MY_HOME_SUBNET to me uid qbittorrent
+
+#deny
+$cmd 00103 deny all from any to any uid qbittorrent
